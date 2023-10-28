@@ -46,7 +46,9 @@ export default function App() {
       >
         <Text style={styles.buttonText}>Sign in</Text>
       </TouchableOpacity>
-      {valid ? <Text style={styles.successText}>Sign in successfully</Text> : null}
+      {valid ? (
+        <Text style={styles.successText}>Sign in successfully</Text>
+      ) : null}
     </View>
   );
 }
@@ -89,6 +91,6 @@ const styles = StyleSheet.create({
   successText: {
     fontSize: 16,
     color: "green",
-    alignSelf: 'center',
+    alignSelf: "center",
   },
 });
