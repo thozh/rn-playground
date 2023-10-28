@@ -1,6 +1,6 @@
-import { create } from "zustand";
+import { createWithEqualityFn } from "zustand/traditional";
 
-export const useStore = create<{
+export const useStore = createWithEqualityFn<{
   firstNumber: number;
   secondNumber: number;
   numbers: number[];

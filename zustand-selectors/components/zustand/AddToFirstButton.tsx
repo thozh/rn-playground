@@ -1,12 +1,14 @@
+import React from "react";
 import { Pressable } from "react-native";
+import { useStore } from "../../libs/useStore";
 import { Text } from "../Themed";
-import { useStore } from "../useStore";
 
-export const AddToFirstButton = () => {
+export const AddToFirstButton = React.memo(() => {
   const addToFirst = useStore((state) => state.addToFirst);
+
   return (
     <Pressable onPress={addToFirst}>
       <Text>Add To First</Text>
     </Pressable>
   );
-};
+});
