@@ -47,6 +47,8 @@ const rowStyles = StyleSheet.create({
   },
 });
 
+const useFlashList = true;
+
 const MovieRow = ({playlist}: {playlist: Playlist}) => {
   const movies = playlistData[playlist.id]();
   const listRef = useRef<FlashList<Movie>>(null);
@@ -62,27 +64,34 @@ const MovieRow = ({playlist}: {playlist: Playlist}) => {
         {playlist.title}
       </Text>
       <View style={rowStyles.container}>
-        {/* <FlashList
-          contentContainerStyle={rowStyles.listContainer}
-          // See https://shopify.github.io/flash-list/docs/fundamentals/performant-components/#remove-key-prop
-          keyExtractor={(movie: Movie, index: number) => index.toString()}
-          ItemSeparatorComponent={MarginBetweenItems}
-          horizontal
-          estimatedItemSize={cardStyles.image.width}
-          data={movies}
-          renderItem={({item}: {item: Movie}) => <MoviePortrait movie={item} />}
-          ref={listRef}
-          onMomentumScrollBegin={onMomentumScrollBegin}
-          onScroll={onScroll}
-        /> */}
-        <FlatList
-          contentContainerStyle={rowStyles.listContainer}
-          keyExtractor={(movie: Movie) => movie.id.toString()}
-          ItemSeparatorComponent={MarginBetweenItems}
-          horizontal
-          data={movies}
-          renderItem={({item}: {item: Movie}) => <MoviePortrait movie={item} />}
-        />
+        {useFlashList ? (
+          <FlashList
+            contentContainerStyle={rowStyles.listContainer}
+            // See https://shopify.github.io/flash-list/docs/fundamentals/performant-components/#remove-key-prop
+            keyExtractor={(movie: Movie, index: number) => index.toString()}
+            ItemSeparatorComponent={MarginBetweenItems}
+            horizontal
+            estimatedItemSize={cardStyles.image.width}
+            data={movies}
+            renderItem={({item}: {item: Movie}) => (
+              <MoviePortrait movie={item} />
+            )}
+            ref={listRef}
+            onMomentumScrollBegin={onMomentumScrollBegin}
+            onScroll={onScroll}
+          />
+        ) : (
+          <FlatList
+            contentContainerStyle={rowStyles.listContainer}
+            keyExtractor={(movie: Movie) => movie.id.toString()}
+            ItemSeparatorComponent={MarginBetweenItems}
+            horizontal
+            data={movies}
+            renderItem={({item}: {item: Movie}) => (
+              <MoviePortrait movie={item} />
+            )}
+          />
+        )}
       </View>
     </>
   );
@@ -98,11 +107,20 @@ const listStyles = StyleSheet.create({
 const App = () => {
   const playlists = require('./api/data/rows.json');
 
-  return (
+  return useFlashList ? (
     <FlashList
       data={playlists}
       keyExtractor={(playlist: Playlist) => playlist.id}
       estimatedItemSize={cardStyles.image.height + 25}
+      renderItem={({item: playlist}: {item: Playlist}) => (
+        <MovieRow playlist={playlist} />
+      )}
+      contentContainerStyle={listStyles.container}
+    />
+  ) : (
+    <FlatList
+      data={playlists}
+      keyExtractor={(playlist: Playlist) => playlist.id}
       renderItem={({item: playlist}: {item: Playlist}) => (
         <MovieRow playlist={playlist} />
       )}
