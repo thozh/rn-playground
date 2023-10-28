@@ -1,52 +1,14 @@
-import { Pressable, StyleSheet } from "react-native";
-import { shallow } from "zustand/shallow";
+import { StyleSheet } from "react-native";
 
 import { Text, View } from "../../components/Themed";
-import { useStore } from "../../components/useStore";
+import { DoNothingButton } from "../../components/zustand/DoNothingButton";
+import { AddToFirstButton } from "../../components/zustand/AddToFirstButton";
+import { FirstValue } from "../../components/zustand/FirstValue";
+import { AddToSecondButton } from "../../components/zustand/AddToSecondButton";
+import { SecondValue } from "../../components/zustand/SecondValue";
+import { NumbersValue } from "../../components/zustand/NumbersValue";
 
-const DoNothingButton = () => {
-  const doNothing = useStore((state) => state.doNothing);
-  return (
-    <Pressable onPress={doNothing}>
-      <Text>Do Nothing</Text>
-    </Pressable>
-  );
-};
-
-const AddToFirstButton = () => {
-  const addToFirst = useStore((state) => state.addToFirst);
-  return (
-    <Pressable onPress={addToFirst}>
-      <Text>Add To First</Text>
-    </Pressable>
-  );
-};
-
-const FirstValue = () => {
-  const { firstNumber } = useStore();
-  return <Text style={{ padding: 8 }}>First value: {firstNumber}</Text>;
-};
-
-const AddToSecondButton = () => {
-  const addToSecond = useStore((state) => state.addToSecond);
-  return (
-    <Pressable onPress={addToSecond}>
-      <Text>Add To Second</Text>
-    </Pressable>
-  );
-};
-
-const SecondValue = () => {
-  const secondNumber = useStore((state) => state.secondNumber);
-  return <Text style={{ padding: 8 }}>Second value: {secondNumber}</Text>;
-};
-
-const NumbersValue = () => {
-  const numbers = useStore((state) => state.numbers, shallow);
-  return <Text style={{ padding: 8 }}>Numbers: {numbers.join(", ")}</Text>;
-};
-
-export default function TabTwoScreen() {
+export default function ZustandScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab Zustand</Text>
