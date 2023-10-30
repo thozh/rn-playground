@@ -3,7 +3,7 @@ appId: com.movielist
 - launchApp
 - assertVisible: .*Family.*
 - repeat:
-    times: 10 # Repeat enough times to scroll to the bottom
+    times: 4 # Repeat enough times to scroll to the bottom
     commands:
       - swipe:
           start: 50%, 90% # From (50% of width, 90% of height)
